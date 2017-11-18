@@ -9,6 +9,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'net.researchgate.release' version '2.3.5'
+}
+
 ext {
     githubUrl = "https://github.com/concordion/${project.name}"
     issuesUrl = "${githubUrl}/issues"
@@ -43,7 +47,6 @@ subprojects {
     apply plugin: 'jacoco'
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
-    apply plugin: net.researchgate.release.ReleasePlugin
     apply plugin: com.jfrog.bintray.gradle.BintrayPlugin
     apply plugin: org.ajoberstar.gradle.git.publish.GitPublishPlugin
 
@@ -173,9 +176,17 @@ subprojects {
         from javadoc.destinationDir
     }
 
+    task(startmessage) << {
+        println 'starting build'
+    }
+
+    task(printversion) << {
+        println project.version
+    }
 
     // 'gradle release' will also upload release to Bintray
-    createReleaseTag.dependsOn bintrayUpload
+    createReleaseTag.dependsOn bintrayUpload, startmessage
+    afterReleaseBuild.dependsOn printversion
 
     gitPublishCopy.dependsOn test
     gitPublishCopy.dependsOn javadoc
@@ -295,7 +306,7 @@ subprojects {
         user = bintrayUsername   // set this in your ~/.gradle/gradle.properties file
         key = bintrayApiKey         // set this in your ~/.gradle/gradle.properties file
         publications = ['main'] // see publications closure
-//        dryRun = true
+        dryRun = true
 //        publish = true
         pkg {
             repo = 'maven'
