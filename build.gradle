@@ -48,6 +48,17 @@ task releaseBuild {
     dependsOn subprojects.findResults { it.tasks.findByName('build') }
 }
 
+task(startmessage) << {
+    println 'starting build'
+}
+
+task(printversion) << {
+    println project.version
+}
+
+beforeReleaseBuild.dependsOn startmessage
+afterReleaseBuild.dependsOn printversion
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'findbugs'
@@ -185,13 +196,13 @@ subprojects {
         from javadoc.destinationDir
     }
 
-    task(startmessage) << {
-        println 'starting build'
-    }
+    // task(startmessage) << {
+    //     println 'starting build'
+    // }
 
-    task(printversion) << {
-        println project.version
-    }
+    // task(printversion) << {
+    //     println project.version
+    // }
 
     // model {
     //     tasks {
@@ -206,21 +217,21 @@ subprojects {
     //     // 'gradle release' will also upload release to Bintray
     //     // tasks.beforeReleaseBuild.dependsOn publishMToMavenLocal, bintrayUpload, startmessage
     // }
-    model {
-        tasks.beforeReleaseBuild {
-            println 'before build'
-        }
-        // if (project.tasks.findByName('publishMainPublicationToMavenLocal')) {
-        //     beforeReleaseBuild.dependsOn 'publishMainPublicationToMavenLocal'
-        // } else {
-        //     project.tasks.whenTaskAdded { addedTask ->
-        //         if (addedTask.name == 'publishMainPublicationToMavenLocal') {
-        //             project.tasks.beforeReleaseBuild.dependsOn 'publishMainPublicationToMavenLocal'
-        //         }
-        //     }
-        // }
-    }
-    afterReleaseBuild.dependsOn printversion
+    // model {
+    //     tasks.beforeReleaseBuild {
+    //         println 'before build'
+    //     }
+    //     // if (project.tasks.findByName('publishMainPublicationToMavenLocal')) {
+    //     //     beforeReleaseBuild.dependsOn 'publishMainPublicationToMavenLocal'
+    //     // } else {
+    //     //     project.tasks.whenTaskAdded { addedTask ->
+    //     //         if (addedTask.name == 'publishMainPublicationToMavenLocal') {
+    //     //             project.tasks.beforeReleaseBuild.dependsOn 'publishMainPublicationToMavenLocal'
+    //     //         }
+    //     //     }
+    //     // }
+    // }
+    // afterReleaseBuild.dependsOn printversion
 
     gitPublishCopy.dependsOn test
     gitPublishCopy.dependsOn javadoc
