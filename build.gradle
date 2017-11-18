@@ -45,7 +45,7 @@ release {
 }
 
 task releaseBuild {
-    dependsOn subprojects*.getTasksByName.findResults { it.tasks.findByName('build') }
+    dependsOn subprojects.getTasksByName.findResults { it.tasks.findByName('build') }
 }
 
 subprojects {
