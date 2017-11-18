@@ -199,6 +199,7 @@ subprojects {
                 doLast {
                     // publishMToMavenLocal, bintrayUpload, startmessage
                     println 'starting build'
+                    publishMToMavenLocal
                 }
             }
         }
