@@ -220,7 +220,8 @@ subprojects {
     //     //     }
     //     // }
     // }
-    afterReleaseBuild.dependsOn printversion, publish
+    beforeReleaseBuild.dependsOn publish
+    afterReleaseBuild.dependsOn printversion
 
     gitPublishCopy.dependsOn test
     gitPublishCopy.dependsOn javadoc
