@@ -193,28 +193,33 @@ subprojects {
         println project.version
     }
 
+    // model {
+    //     tasks {
+    //         beforeReleaseBuild {
+    //             doFirst {
+    //                 // publishMToMavenLocal, bintrayUpload, startmessage
+    //                 println 'starting build'
+    //                 publishMToMavenLocal
+    //             }
+    //         }
+    //     }
+    //     // 'gradle release' will also upload release to Bintray
+    //     // tasks.beforeReleaseBuild.dependsOn publishMToMavenLocal, bintrayUpload, startmessage
+    // }
     model {
-        tasks {
-            beforeReleaseBuild {
-                doFirst {
-                    // publishMToMavenLocal, bintrayUpload, startmessage
-                    println 'starting build'
-                    publishMToMavenLocal
-                }
-            }
+        tasks.beforeReleaseBuild {
+            println 'before build'
         }
-        // 'gradle release' will also upload release to Bintray
-        // tasks.beforeReleaseBuild.dependsOn publishMToMavenLocal, bintrayUpload, startmessage
+        // if (project.tasks.findByName('publishMainPublicationToMavenLocal')) {
+        //     beforeReleaseBuild.dependsOn 'publishMainPublicationToMavenLocal'
+        // } else {
+        //     project.tasks.whenTaskAdded { addedTask ->
+        //         if (addedTask.name == 'publishMainPublicationToMavenLocal') {
+        //             project.tasks.beforeReleaseBuild.dependsOn 'publishMainPublicationToMavenLocal'
+        //         }
+        //     }
+        // }
     }
-        if (project.tasks.findByName('publishMainPublicationToMavenLocal')) {
-            beforeReleaseBuild.dependsOn 'publishMainPublicationToMavenLocal'
-        } else {
-            project.tasks.whenTaskAdded { addedTask ->
-                if (addedTask.name == 'publishMainPublicationToMavenLocal') {
-                    project.tasks.beforeReleaseBuild.dependsOn 'publishMainPublicationToMavenLocal'
-                }
-            }
-        }
     afterReleaseBuild.dependsOn printversion
 
     gitPublishCopy.dependsOn test
