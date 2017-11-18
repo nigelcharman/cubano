@@ -194,11 +194,19 @@ subprojects {
     }
 
     model {
+        tasks {
+            beforeReleaseBuild {
+                doLast {
+                    // publishMToMavenLocal, bintrayUpload, startmessage
+                    println 'starting build'
+                }
+            }
+        }
         // 'gradle release' will also upload release to Bintray
-        beforeReleaseBuild.dependsOn publishMToMavenLocal, bintrayUpload, startmessage
-        afterReleaseBuild.dependsOn printversion
+        // tasks.beforeReleaseBuild.dependsOn publishMToMavenLocal, bintrayUpload, startmessage
     }
-    
+    afterReleaseBuild.dependsOn printversion
+
     gitPublishCopy.dependsOn test
     gitPublishCopy.dependsOn javadoc
 
