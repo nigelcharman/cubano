@@ -48,17 +48,6 @@ task releaseBuild {
     dependsOn subprojects.findResults { it.tasks.findByName('build') }
 }
 
-task(startmessage) << {
-    println 'starting build'
-}
-
-task(printversion) << {
-    println project.version
-}
-
-beforeReleaseBuild.dependsOn startmessage
-afterReleaseBuild.dependsOn printversion
-
 subprojects {
     apply plugin: 'java'
     apply plugin: 'findbugs'
@@ -200,9 +189,9 @@ subprojects {
     //     println 'starting build'
     // }
 
-    // task(printversion) << {
-    //     println project.version
-    // }
+    task(printversion) << {
+        println project.version
+    }
 
     // model {
     //     tasks {
@@ -231,7 +220,7 @@ subprojects {
     //     //     }
     //     // }
     // }
-    // afterReleaseBuild.dependsOn printversion
+    afterReleaseBuild.dependsOn printversion
 
     gitPublishCopy.dependsOn test
     gitPublishCopy.dependsOn javadoc
