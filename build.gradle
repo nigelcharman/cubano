@@ -193,19 +193,19 @@ subprojects {
         println project.version
     }
 
-    model {
-        tasks {
-            beforeReleaseBuild {
-                doLast {
-                    // publishMToMavenLocal, bintrayUpload, startmessage
-                    println 'starting build'
-                    publishMToMavenLocal
-                }
-            }
-        }
-        // 'gradle release' will also upload release to Bintray
-        // tasks.beforeReleaseBuild.dependsOn publishMToMavenLocal, bintrayUpload, startmessage
-    }
+    // model {
+    //     tasks {
+    //         beforeReleaseBuild {
+    //             doFirst {
+    //                 // publishMToMavenLocal, bintrayUpload, startmessage
+    //                 println 'starting build'
+    //                 publishMToMavenLocal
+    //             }
+    //         }
+    //     }
+    //     // 'gradle release' will also upload release to Bintray
+    //     // tasks.beforeReleaseBuild.dependsOn publishMToMavenLocal, bintrayUpload, startmessage
+    // }
     afterReleaseBuild.dependsOn printversion
 
     gitPublishCopy.dependsOn test
