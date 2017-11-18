@@ -45,7 +45,7 @@ release {
 }
 
 task releaseBuild {
-    dependsOn subprojects.findResults { it.tasks.findByName('build') }
+    dependsOn subprojects*.getTasksByName.findResults { it.tasks.findByName('build') }
 }
 
 subprojects {
@@ -118,7 +118,7 @@ subprojects {
 
     checkstyle {
         ignoreFailures = true
-        configDir = new File("${rootDir}/config/checkstyle")
+        // configDir = new File("${rootDir}/config/checkstyle")
     }
 
     findbugs {
@@ -194,7 +194,7 @@ subprojects {
     }
 
     // 'gradle release' will also upload release to Bintray
-    createReleaseTag.dependsOn bintrayUpload, startmessage
+    beforeReleaseBuild.dependsOn startmessage
     afterReleaseBuild.dependsOn printversion
 
     gitPublishCopy.dependsOn test
