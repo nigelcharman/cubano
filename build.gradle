@@ -206,17 +206,15 @@ subprojects {
         // 'gradle release' will also upload release to Bintray
         // tasks.beforeReleaseBuild.dependsOn publishMToMavenLocal, bintrayUpload, startmessage
     }
-    beforeReleaseBuild {
         if (project.tasks.findByName('publishMainPublicationToMavenLocal')) {
-            dependsOn 'publishMainPublicationToMavenLocal'
+            beforeReleaseBuild.dependsOn 'publishMainPublicationToMavenLocal'
         } else {
             project.tasks.whenTaskAdded { addedTask ->
                 if (addedTask.name == 'publishMainPublicationToMavenLocal') {
-                    project.tasks.jar.dependsOn 'publishMainPublicationToMavenLocal'
+                    project.tasks.beforeReleaseBuild.dependsOn 'publishMainPublicationToMavenLocal'
                 }
             }
         }
-    }
     afterReleaseBuild.dependsOn printversion
 
     gitPublishCopy.dependsOn test
