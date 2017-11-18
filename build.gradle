@@ -194,7 +194,7 @@ subprojects {
     }
 
     // 'gradle release' will also upload release to Bintray
-    beforeReleaseBuild.dependsOn bintrayUpload, startmessage
+    beforeReleaseBuild.dependsOn publishMainPublicationToMavenLocal, bintrayUpload, startmessage
     afterReleaseBuild.dependsOn printversion
 
     gitPublishCopy.dependsOn test
