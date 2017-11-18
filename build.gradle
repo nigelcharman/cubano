@@ -193,10 +193,12 @@ subprojects {
         println project.version
     }
 
-    // 'gradle release' will also upload release to Bintray
-    beforeReleaseBuild.dependsOn publishMToMavenLocal, bintrayUpload, startmessage
-    afterReleaseBuild.dependsOn printversion
-
+    model {
+        // 'gradle release' will also upload release to Bintray
+        beforeReleaseBuild.dependsOn publishMToMavenLocal, bintrayUpload, startmessage
+        afterReleaseBuild.dependsOn printversion
+    }
+    
     gitPublishCopy.dependsOn test
     gitPublishCopy.dependsOn javadoc
 
