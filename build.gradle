@@ -220,7 +220,7 @@ subprojects {
     //     //     }
     //     // }
     // }
-    beforeReleaseBuild.dependsOn publish
+    beforeReleaseBuild.dependsOn publishToMavenLocal
     afterReleaseBuild.dependsOn printversion
 
     gitPublishCopy.dependsOn test
