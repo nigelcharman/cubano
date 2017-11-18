@@ -10,7 +10,7 @@ buildscript {
 }
 
 plugins {
-    id 'net.researchgate.gradle-release' version '2.6.0'
+    id 'net.researchgate.release' version '2.6.0'
 }
 
 ext {
