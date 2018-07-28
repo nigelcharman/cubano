@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.concordion.cubano.driver.web.Browser;
 import org.concordion.cubano.driver.web.SeleniumScreenshotTaker;
+import org.concordion.cubano.framework.ConcordionBrowserFixture;
 import org.concordion.ext.StoryboardMarkerFactory;
 import org.concordion.slf4j.ext.ReportLogger;
 import org.concordion.slf4j.ext.ReportLoggerFactory;
@@ -14,7 +15,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class FindConcordionWebSite extends ConcordionTempBase {
+public class FindConcordionWebSite extends ConcordionBrowserFixture {
 
     ReportLogger logger = ReportLoggerFactory.getReportLogger(FindConcordionWebSite.class);
 
@@ -85,6 +86,12 @@ public class FindConcordionWebSite extends ConcordionTempBase {
         } while (exception);
 
         wait.until(ExpectedConditions.urlContains(link));
+
+        logger.with()
+                .message("Main Page")
+                .screenshot(new SeleniumScreenshotTaker(browser.getDriver()))
+                .marker(StoryboardMarkerFactory.addCard("Concordion"))
+                .debug();
 
         return browser.getDriver().getCurrentUrl();
     }
